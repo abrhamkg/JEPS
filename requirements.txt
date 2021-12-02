@@ -1,0 +1,7 @@
+opencv-python==4.5.2.52
+PyYAML==5.4.1
+
+argparse==1.4.0
+numpy==1.20.2
+einops==0.3.0
+matplotlib==3.4.3

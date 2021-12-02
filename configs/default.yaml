@@ -1,0 +1,65 @@
+AEJEPS:
+  EMBEDDING_DIM: 300                # Embedding dimension of the text embedding module in AEJEPS
+  HIDDEN_DIM: 256                   # The encoder's hidden representation size
+  NUM_LAYERS_ENCODER: 2             # The number of layers in the Encoder LSTM
+  BATCH_FIRST: True                 # Whether the first dimension is the batch dimension or the time dimension changing this requires significant changes to architectures of many of the models
+  DROPOUT_ENCODER: 0.0              #
+  BIDIRECTIONAL_ENCODER: True       # Whether to process the encoder input sequence in both directions or in left-to-right manner
+  NUM_LAYERS_MOTOR: 1               # Number of layers in motor decoder, changing this requires significant changes to decoder implementation
+  ACTIVATION_MOTOR: 'relu'          # Only important if switching the LSTMs in AEJEPS to Vanilla RNN
+  DROPOUT_MOTOR: 0.0                # Only important if switching the LSTMs in AEJEPS to Vanilla RNN
+  NUM_LAYERS_LANG: 1                # Number of layers in motor decoder, changing this requires significant changes to decoder implementation
+  ACTIVATION_LANG: 'relu'           # Only important if switching the LSTMs in AEJEPS to Vanilla RNN
+  DROPOUT_LANG: 0.0                 # Only important if switching the LSTMs in AEJEPS to Vanilla RNN
+
+COMPOSITE:
+  EMBEDDING_DIM: 300                # Embedding dimension of the text embedding module in the 3 components of the Composite Model
+  BATCH_FIRST: True
+  CG_ENCODER_HIDDEN_DIM: 256        # The encoder's hidden representation size for motor command generator model
+  CG_DECODER_HIDDEN_DIM: 128        # The decoder's hidden representation size for motor command generator model
+  CG_ENCODER_NUM_LAYERS: 1          # The number of layers in command generating model
+  CG_BIDIRECTIONAL: False           # Whether to use bidirectional encoder: Currently not supported
+  TG_BIDIRECTIONAL: False           # Whether to use bidirectional encoder: Currently not supported
+  TG_ENCODER_NUM_LAYERS: 1          # The number of layers in text generating model
+  TG_ENCODER_HIDDEN_DIM: 256        # The encoder's hidden representation size for text generator model
+  TG_DECODER_HIDDEN_DIM: 128        # The encoder's hidden representation size for text generator model
+  GENERATOR_LATENT_DIM: 256         # The size of the noise prior vector input to the Generator model
+  GENERATOR_NUM_CHANNELS: 64        # The number of feature maps to use in the generator
+  DISCRIMINATOR_NUM_CHANNELS: 64    # The number of feature maps to use in the discriminator
+  TEXT_ENCODING_DIM: 128            # The size of the fixed-length representation of the text sequence in the generator and discriminator
+  COMMAND_ENCODING_DIM: 128         # The size of the fixed-length representation of the motor command sequence in the generator and discriminator
+
+MRNN:
+  EMBEDDING_DIM: 300
+  NUM_LAYERS_ENCODER: 2
+  BATCH_FIRST: True
+  MULTIMODAL_LAYER_DIM: 128
+  HIDDEN_DIM: 512
+
+DATASET:
+  VOCABULARY_SIZE: 7357 # The number of words in the dataset
+  NUM_COMMANDS: 20   # The number of motor commands in the dataset
+  IMAGE_SIZE: 224    # Image size to resize to when resizing frames loaded from video, changing this must be accompanied by changes to architectures of the Discriminator, Generator, and AEJEPS classes
+  SOS: 1             # The symbol for start of sequence indicator that will be prepended to the text and motor command sequence
+  EOS: 2             # The symbol for end of sequence indicator that will be appended to the text and motor command sequence
+  TRAIN_FILE: data/something-something-small.json  # The path to the json file that describes the Something-Something dataset
+  VIDEO_FOLDER: data/20bn-something-something-v2   # The folder where the Something-Something videos live
+  REVERSE: False                                   # Whether to reverse the target sequence or not
+
+TRAIN:
+  BATCH_SIZE: 4                        # Batch size to use when training the dataset
+  DATASET: SomethingSomethingV2Dataset # The dataset class to use when fetching data (will be useful once there are multiple dataset classes)
+  SHUFFLE: True                        # Whetehr to shuffle the batches to be loading
+  DROP_LAST: True                      # Leave the last batch if number of datapoints in the dataset is not divisible by the batch size
+  NUM_WORKERS: 4                       # Number of CPU threads to use when loading data
+  PIN_MEMORY: True
+  MAX_EPOCH: 10                        # The maximum number epochs to train the model for
+  GPU: True                            # Whether to use GPU or not when it is available
+
+MODEL:
+  LEARNING_RATE: 0.01                  # The learning rate that will be used by optimizer(s)
+  REDUCTION: mean                      # Computes the mean of the loss over a batch of data as a loss (can also be sum)
+  CHECKPOINT_DIR: checkpoints/         # The directory where checkpoints are to be saved
+RUN:
+  MODE: train_gan                   # Chooses the function that will be run when running the file run.py
+

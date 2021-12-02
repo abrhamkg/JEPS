@@ -1,0 +1,7 @@
+name: jeps
+dependencies:
+  - python>=3.6
+  - anaconda
+  - pip
+  - pip:
+    - -r requirements.txt
