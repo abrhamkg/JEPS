@@ -1,0 +1,682 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+<meta name="generator" content="pdoc 0.8.1" />
+<title>JEPS.utils.data_utils API documentation</title>
+<meta name="description" content="" />
+<link href='https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.0/normalize.min.css' rel='stylesheet'>
+<link href='https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/8.0.0/sanitize.min.css' rel='stylesheet'>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" rel="stylesheet">
+<style>.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}a{color:#058;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:#f2f2f1;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{background:#f8f8f8;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}.admonition{padding:.1em .5em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.item .name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul{padding-left:1.5em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script async src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS_CHTML'></script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>JEPS.utils.data_utils</code></h1>
+</header>
+<section id="section-intro">
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">import torch
+import json
+import random
+import string
+from torch.nn.functional import one_hot
+import cv2
+
+
+def generate_motor_command_sequence(num_commands, sos=1, eos=2):
+    &#34;&#34;&#34;
+    Generates a random sequence of motor commands. This is useful in cases where the dataset contains only images and
+    text. The generated motor command sequence can be used to validate various classes such as torch.utils.data.Dataset
+    subclasses and torch.utils.data.DataLoader subclasses while waiting for the actual motor command to be available.
+
+    Parameters
+    ----------
+    num_commands : int
+        The count of motor commands in the dataset
+    sos : int
+        The integer representing the start-of-sequence symbol
+    eos : int
+        The integer representing the end-of-sequence symbol
+
+    Returns
+    -------
+    A motor command sequence of random length and random entries (motor commands). The returned sequence first element is
+    the start-of-sequence symbol while the last one is the end-of-sequence symbol.
+
+    Examples
+    ----------
+    &gt;&gt;&gt; from utils.parser import load_config
+    &gt;&gt;&gt; cfg_file = load_config(&#39;configs/default.yaml&#39;)
+    &gt;&gt;&gt; motor_comands = generate_motor_command_sequence(20)
+    &gt;&gt;&gt; print(motor_comands)
+
+    &#34;&#34;&#34;
+    length = random.randint(1, 50)
+    commands = torch.cat([torch.tensor([sos]).long(), torch.randint(0, num_commands, (length,)), torch.tensor([eos]).long()])
+    return commands
+
+
+def get_bacth(cfg, text_len=200, cmds_len=30):
+    &#34;&#34;&#34;
+    Generates dummy data that can be used to test models. The batch size specified in the
+    configuration file will be used to determine the batch size of the generated batch.
+
+    Parameters
+    ----------
+    cfg : utils.parser.AttributeDict
+        The configuration file to use when determine the vocabulary size and number of motor commands
+    text_len : int
+        The length of the longest text description to put in the batch of data
+    cmds_len : int
+        The length of the longest motor command sequence to put in the batch of data
+
+    Returns
+    -------
+    per_image : torch.Tensor
+        Perceived image torch.Tensor of shape (batch_size, 3, 224, 224)
+    goal_image : torch.Tensor
+        Goal image torch.Tensor of shape (batch_size, 3, 224, 224)
+    text : torch.Tensor
+         Text sequence torch.Tensor of shape (batch_size, max_sequence_length, vocabulary_size)
+    command : torch.Tensor
+        Motor command sequence torch.Tensor of shape (batch_size, max_sequence_length, num_motor_commands)
+    lengths_text : list
+        The lengths of the generated text sequences in the batch
+    lengths_cmd : list
+        The lengths of the generated motor command sequences in the batch
+
+    &#34;&#34;&#34;
+
+    batch_size = cfg.TRAIN.BATCH_SIZE
+    per_image = torch.randn((batch_size, 3, cfg.DATASET.IMAGE_SIZE, cfg.DATASET.IMAGE_SIZE))
+    goal_image = torch.randn((batch_size, 3, cfg.DATASET.IMAGE_SIZE, cfg.DATASET.IMAGE_SIZE))
+
+    vocab_size = cfg.DATASET.VOCABULARY_SIZE
+    num_commands = cfg.DATASET.NUM_COMMANDS
+
+    max_len = max(text_len, cmds_len)
+    text = torch.randint(0, vocab_size, (batch_size, max_len))
+
+    commands = torch.randint(0, num_commands, (batch_size, max_len))
+    commands = one_hot(commands, num_classes=num_commands)
+
+    lengths_text = [random.randint(1, text_len + 1) for i in range(batch_size - 1)] + [text_len]
+    lengths_cmd = [random.randint(1, cmds_len + 1) for i in range(batch_size - 1)] + [cmds_len]
+
+    return per_image, goal_image, text, commands.float(), lengths_text, lengths_cmd
+
+
+def get_encoded_text(cfg, add_sos=True, add_eos=True):
+    &#34;&#34;&#34;
+    Loads a JSON file with a specific format containing textual action descriptions, encodes them to integers, and
+    returns the word to integer and mapping as well as the integer-encoded-text. The file that will be used is specified
+    in the configuration file under the DATASET category as TRAIN_FILE i.e cfg.DATASET.TRAIN_FILE
+
+    Parameters
+    ----------
+    cfg : utils.parser.AttributeDict
+        A loaded configuration file
+    add_sos : bool
+        Whether to prepend the start-of-sequence at the front of the sequence.
+        Default is True
+    add_eos : bool
+        Whether to append the end-of-sequence at the front of the sequence.
+        Default is True
+
+    Returns
+    -------
+    word2int : dict
+        A dictionary (hashmap) with the words in the dataset as keys and the assigned integer as value
+    all_descriptions : dict
+        A dictionary (hashmap) with an id identifying a data point in the dataset as its key and the integer-encoded
+        text as its value.
+
+    Expected Format for TRAIN FILE
+    ------------------------------
+    The JSON file must contain a list whose elements are dictionaries who have two required keys. The required keys are
+    &#39;id&#39; and &#39;label&#39; containing the id of the data point and the text description corresponding to the data point respectively.
+
+    &gt;&gt;&gt; [{&#34;id&#34;: &#34;45&#34;, &#34;label&#34;: &#34;putting wood onto cable&#34;, &#34;template&#34;: &#34;Putting [something] onto [something]&#34;, &#34;placeholders&#34;: [&#34;wood&#34;, &#34;cable&#34;]}, {&#34;id&#34;: &#34;30&#34;, &#34;label&#34;: &#34;pulling tupperware from right to left&#34;, &#34;template&#34;: &#34;Pulling [something] from right to left&#34;, &#34;placeholders&#34;: [&#34;tupperware&#34;]}, {&#34;id&#34;: &#34;2&#34;, &#34;label&#34;: &#34;pretending to pick a pillow up&#34;, &#34;template&#34;: &#34;Pretending to pick [something] up&#34;, &#34;placeholders&#34;: [&#34;a pillow&#34;]}, {&#34;id&#34;: &#34;9&#34;, &#34;label&#34;: &#34;putting usb behind mouse&#34;, &#34;template&#34;: &#34;Putting [something] behind [something]&#34;, &#34;placeholders&#34;: [&#34;usb&#34;, &#34;mouse&#34;]}, {&#34;id&#34;: &#34;7&#34;, &#34;label&#34;: &#34;pushing flashdisk from right to left&#34;, &#34;template&#34;: &#34;Pushing [something] from right to left&#34;, &#34;placeholders&#34;: [&#34;flashdisk&#34;]}, {&#34;id&#34;: &#34;31&#34;, &#34;label&#34;: &#34;putting coconut kernel&#34;, &#34;template&#34;: &#34;Putting [something similar to other things that are already on the table]&#34;, &#34;placeholders&#34;: [&#34;coconut kernel&#34;]}, {&#34;id&#34;: &#34;33&#34;, &#34;label&#34;: &#34;scooping powder up with spoon&#34;, &#34;template&#34;: &#34;Scooping [something] up with [something]&#34;, &#34;placeholders&#34;: [&#34;powder&#34;, &#34;spoon&#34;]}, {&#34;id&#34;: &#34;49&#34;, &#34;label&#34;: &#34;lifting up one end of hose, then letting it drop down&#34;, &#34;template&#34;: &#34;Lifting up one end of [something], then letting it drop down&#34;, &#34;placeholders&#34;: [&#34;hose&#34;]}]
+
+    Examples
+    ---------
+    &gt;&gt;&gt; from utils.parser import load_config
+    &gt;&gt;&gt; cfg_file = load_config(&#39;configs/default.yaml&#39;)
+    &gt;&gt;&gt; word2int, all_descriptions = get_encoded_text(cfg_file)
+
+    &#34;&#34;&#34;
+    train_filename = cfg.DATASET.TRAIN_FILE
+
+    with open(train_filename) as tf:
+        trainset = json.load(tf)
+
+    word2int = dict()
+    all_int_descriptions = dict()
+    word_id = 3
+    for video in trainset:
+        video_id = video[&#39;id&#39;]
+        description = video[&#39;label&#39;]
+
+        # Remove punctuation from description
+        description = description.translate(str.maketrans(&#39;&#39;, &#39;&#39;, string.punctuation))
+
+        # split on whitespace to get a list of words
+        words = description.split()
+
+        int_description = []
+        if add_sos:
+            int_description.append(cfg.DATASET.SOS)
+
+        # Add all words in lowercase form to count number of words
+        for w in words:
+            if w not in word2int:
+                word2int[w] = word_id
+                int_description.append(word_id)
+                word_id += 1
+            else:
+                int_description.append(word2int[w])
+        if add_eos:
+            int_description.append(cfg.DATASET.EOS)
+        all_int_descriptions[video_id] = int_description
+
+    print(f&#34;{len(word2int)} words were found in Something-Something-v2&#34;)
+    return word2int, all_int_descriptions
+
+
+def get_first_last_frames(video_path):
+    &#34;&#34;&#34;
+    Opens a video whose path is given, loads the first and last frame and returns them.
+
+    Parameters
+    ----------
+    video_path : str
+        The path to the video from which the frames will be loaded.
+
+    Returns
+    -------
+    first_frame : numpy.ndarray
+        The loaded first frame of the video with shape (height, width, 3)
+    last_frame : numpy.ndarray
+        The loaded last frame of the video with shape (height, width, 3)
+
+    Examples
+    --------
+    &gt;&gt;&gt; import matplotlib.pyplot as plt
+    &gt;&gt;&gt; first, last = get_first_last_frames(&#34;data/20bn-something-something-v2/2.webm&#34;)
+    &gt;&gt;&gt; plt.imshow(first)
+    &gt;&gt;&gt; plt.figure()
+    &gt;&gt;&gt; plt.imshow(last)
+    &gt;&gt;&gt; plt.show()
+    &#34;&#34;&#34;
+    vs = cv2.VideoCapture(video_path)
+    last_frame_num = vs.get(cv2.CAP_PROP_FRAME_COUNT) - 1
+    ret, first_frame = vs.read()
+
+    if not ret:
+        raise RuntimeError(f&#34;Unable to read first frame from {video_path}&#34;)
+    # Seek the last frame
+    vs.set(cv2.CAP_PROP_POS_FRAMES, last_frame_num)
+
+    ret, last_frame = vs.read()
+    if not ret:
+        raise RuntimeError(f&#34;Unable to read last frame from {video_path}&#34;)
+
+    vs.release()
+    return first_frame, last_frame
+
+
+if __name__ == &#39;__main__&#39;:
+    import matplotlib.pyplot as plt
+    from utils.parser import load_config
+    cfg_file = load_config(&#39;configs/default.yaml&#39;)
+
+    motor_comands = generate_motor_command_sequence(20)
+    print(&#34;Generated motor command sequence: \n&#34;, motor_comands)
+
+    get_encoded_text(cfg_file)
+
+    first, last = get_first_last_frames(&#34;data/20bn-something-something-v2/2.webm&#34;)
+
+    plt.imshow(first)
+    plt.figure()
+    plt.imshow(last)
+
+    plt.show()</code></pre>
+</details>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-functions">Functions</h2>
+<dl>
+<dt id="JEPS.utils.data_utils.generate_motor_command_sequence"><code class="name flex">
+<span>def <span class="ident">generate_motor_command_sequence</span></span>(<span>num_commands, sos=1, eos=2)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Generates a random sequence of motor commands. This is useful in cases where the dataset contains only images and
+text. The generated motor command sequence can be used to validate various classes such as torch.utils.data.Dataset
+subclasses and torch.utils.data.DataLoader subclasses while waiting for the actual motor command to be available.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>num_commands</code></strong> :&ensp;<code>int</code></dt>
+<dd>The count of motor commands in the dataset</dd>
+<dt><strong><code>sos</code></strong> :&ensp;<code>int</code></dt>
+<dd>The integer representing the start-of-sequence symbol</dd>
+<dt><strong><code>eos</code></strong> :&ensp;<code>int</code></dt>
+<dd>The integer representing the end-of-sequence symbol</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>A motor command sequence</code> of <code>random length and random entries (motor commands). The returned sequence first element is</code></dt>
+<dd>&nbsp;</dd>
+</dl>
+<p>the start-of-sequence symbol while the last one is the end-of-sequence symbol.</p>
+<h2 id="examples">Examples</h2>
+<pre><code class="language-python">&gt;&gt;&gt; from utils.parser import load_config
+&gt;&gt;&gt; cfg_file = load_config('configs/default.yaml')
+&gt;&gt;&gt; motor_comands = generate_motor_command_sequence(20)
+&gt;&gt;&gt; print(motor_comands)
+</code></pre></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def generate_motor_command_sequence(num_commands, sos=1, eos=2):
+    &#34;&#34;&#34;
+    Generates a random sequence of motor commands. This is useful in cases where the dataset contains only images and
+    text. The generated motor command sequence can be used to validate various classes such as torch.utils.data.Dataset
+    subclasses and torch.utils.data.DataLoader subclasses while waiting for the actual motor command to be available.
+
+    Parameters
+    ----------
+    num_commands : int
+        The count of motor commands in the dataset
+    sos : int
+        The integer representing the start-of-sequence symbol
+    eos : int
+        The integer representing the end-of-sequence symbol
+
+    Returns
+    -------
+    A motor command sequence of random length and random entries (motor commands). The returned sequence first element is
+    the start-of-sequence symbol while the last one is the end-of-sequence symbol.
+
+    Examples
+    ----------
+    &gt;&gt;&gt; from utils.parser import load_config
+    &gt;&gt;&gt; cfg_file = load_config(&#39;configs/default.yaml&#39;)
+    &gt;&gt;&gt; motor_comands = generate_motor_command_sequence(20)
+    &gt;&gt;&gt; print(motor_comands)
+
+    &#34;&#34;&#34;
+    length = random.randint(1, 50)
+    commands = torch.cat([torch.tensor([sos]).long(), torch.randint(0, num_commands, (length,)), torch.tensor([eos]).long()])
+    return commands</code></pre>
+</details>
+</dd>
+<dt id="JEPS.utils.data_utils.get_bacth"><code class="name flex">
+<span>def <span class="ident">get_bacth</span></span>(<span>cfg, text_len=200, cmds_len=30)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Generates dummy data that can be used to test models. The batch size specified in the
+configuration file will be used to determine the batch size of the generated batch.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>cfg</code></strong> :&ensp;<code>utils.parser.AttributeDict</code></dt>
+<dd>The configuration file to use when determine the vocabulary size and number of motor commands</dd>
+<dt><strong><code>text_len</code></strong> :&ensp;<code>int</code></dt>
+<dd>The length of the longest text description to put in the batch of data</dd>
+<dt><strong><code>cmds_len</code></strong> :&ensp;<code>int</code></dt>
+<dd>The length of the longest motor command sequence to put in the batch of data</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><strong><code>per_image</code></strong> :&ensp;<code>torch.Tensor</code></dt>
+<dd>Perceived image torch.Tensor of shape (batch_size, 3, 224, 224)</dd>
+<dt><strong><code>goal_image</code></strong> :&ensp;<code>torch.Tensor</code></dt>
+<dd>Goal image torch.Tensor of shape (batch_size, 3, 224, 224)</dd>
+<dt><strong><code>text</code></strong> :&ensp;<code>torch.Tensor</code></dt>
+<dd>Text sequence torch.Tensor of shape (batch_size, max_sequence_length, vocabulary_size)</dd>
+<dt><strong><code>command</code></strong> :&ensp;<code>torch.Tensor</code></dt>
+<dd>Motor command sequence torch.Tensor of shape (batch_size, max_sequence_length, num_motor_commands)</dd>
+<dt><strong><code>lengths_text</code></strong> :&ensp;<code>list</code></dt>
+<dd>The lengths of the generated text sequences in the batch</dd>
+<dt><strong><code>lengths_cmd</code></strong> :&ensp;<code>list</code></dt>
+<dd>The lengths of the generated motor command sequences in the batch</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get_bacth(cfg, text_len=200, cmds_len=30):
+    &#34;&#34;&#34;
+    Generates dummy data that can be used to test models. The batch size specified in the
+    configuration file will be used to determine the batch size of the generated batch.
+
+    Parameters
+    ----------
+    cfg : utils.parser.AttributeDict
+        The configuration file to use when determine the vocabulary size and number of motor commands
+    text_len : int
+        The length of the longest text description to put in the batch of data
+    cmds_len : int
+        The length of the longest motor command sequence to put in the batch of data
+
+    Returns
+    -------
+    per_image : torch.Tensor
+        Perceived image torch.Tensor of shape (batch_size, 3, 224, 224)
+    goal_image : torch.Tensor
+        Goal image torch.Tensor of shape (batch_size, 3, 224, 224)
+    text : torch.Tensor
+         Text sequence torch.Tensor of shape (batch_size, max_sequence_length, vocabulary_size)
+    command : torch.Tensor
+        Motor command sequence torch.Tensor of shape (batch_size, max_sequence_length, num_motor_commands)
+    lengths_text : list
+        The lengths of the generated text sequences in the batch
+    lengths_cmd : list
+        The lengths of the generated motor command sequences in the batch
+
+    &#34;&#34;&#34;
+
+    batch_size = cfg.TRAIN.BATCH_SIZE
+    per_image = torch.randn((batch_size, 3, cfg.DATASET.IMAGE_SIZE, cfg.DATASET.IMAGE_SIZE))
+    goal_image = torch.randn((batch_size, 3, cfg.DATASET.IMAGE_SIZE, cfg.DATASET.IMAGE_SIZE))
+
+    vocab_size = cfg.DATASET.VOCABULARY_SIZE
+    num_commands = cfg.DATASET.NUM_COMMANDS
+
+    max_len = max(text_len, cmds_len)
+    text = torch.randint(0, vocab_size, (batch_size, max_len))
+
+    commands = torch.randint(0, num_commands, (batch_size, max_len))
+    commands = one_hot(commands, num_classes=num_commands)
+
+    lengths_text = [random.randint(1, text_len + 1) for i in range(batch_size - 1)] + [text_len]
+    lengths_cmd = [random.randint(1, cmds_len + 1) for i in range(batch_size - 1)] + [cmds_len]
+
+    return per_image, goal_image, text, commands.float(), lengths_text, lengths_cmd</code></pre>
+</details>
+</dd>
+<dt id="JEPS.utils.data_utils.get_encoded_text"><code class="name flex">
+<span>def <span class="ident">get_encoded_text</span></span>(<span>cfg, add_sos=True, add_eos=True)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Loads a JSON file with a specific format containing textual action descriptions, encodes them to integers, and
+returns the word to integer and mapping as well as the integer-encoded-text. The file that will be used is specified
+in the configuration file under the DATASET category as TRAIN_FILE i.e cfg.DATASET.TRAIN_FILE</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>cfg</code></strong> :&ensp;<code>utils.parser.AttributeDict</code></dt>
+<dd>A loaded configuration file</dd>
+<dt><strong><code>add_sos</code></strong> :&ensp;<code>bool</code></dt>
+<dd>Whether to prepend the start-of-sequence at the front of the sequence.
+Default is True</dd>
+<dt><strong><code>add_eos</code></strong> :&ensp;<code>bool</code></dt>
+<dd>Whether to append the end-of-sequence at the front of the sequence.
+Default is True</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><strong><code>word2int</code></strong> :&ensp;<code>dict</code></dt>
+<dd>A dictionary (hashmap) with the words in the dataset as keys and the assigned integer as value</dd>
+<dt><strong><code>all_descriptions</code></strong> :&ensp;<code>dict</code></dt>
+<dd>A dictionary (hashmap) with an id identifying a data point in the dataset as its key and the integer-encoded
+text as its value.</dd>
+</dl>
+<h2 id="expected-format-for-train-file">Expected Format For Train File</h2>
+<p>The JSON file must contain a list whose elements are dictionaries who have two required keys. The required keys are
+'id' and 'label' containing the id of the data point and the text description corresponding to the data point respectively.</p>
+<pre><code class="language-python">&gt;&gt;&gt; [{&quot;id&quot;: &quot;45&quot;, &quot;label&quot;: &quot;putting wood onto cable&quot;, &quot;template&quot;: &quot;Putting [something] onto [something]&quot;, &quot;placeholders&quot;: [&quot;wood&quot;, &quot;cable&quot;]}, {&quot;id&quot;: &quot;30&quot;, &quot;label&quot;: &quot;pulling tupperware from right to left&quot;, &quot;template&quot;: &quot;Pulling [something] from right to left&quot;, &quot;placeholders&quot;: [&quot;tupperware&quot;]}, {&quot;id&quot;: &quot;2&quot;, &quot;label&quot;: &quot;pretending to pick a pillow up&quot;, &quot;template&quot;: &quot;Pretending to pick [something] up&quot;, &quot;placeholders&quot;: [&quot;a pillow&quot;]}, {&quot;id&quot;: &quot;9&quot;, &quot;label&quot;: &quot;putting usb behind mouse&quot;, &quot;template&quot;: &quot;Putting [something] behind [something]&quot;, &quot;placeholders&quot;: [&quot;usb&quot;, &quot;mouse&quot;]}, {&quot;id&quot;: &quot;7&quot;, &quot;label&quot;: &quot;pushing flashdisk from right to left&quot;, &quot;template&quot;: &quot;Pushing [something] from right to left&quot;, &quot;placeholders&quot;: [&quot;flashdisk&quot;]}, {&quot;id&quot;: &quot;31&quot;, &quot;label&quot;: &quot;putting coconut kernel&quot;, &quot;template&quot;: &quot;Putting [something similar to other things that are already on the table]&quot;, &quot;placeholders&quot;: [&quot;coconut kernel&quot;]}, {&quot;id&quot;: &quot;33&quot;, &quot;label&quot;: &quot;scooping powder up with spoon&quot;, &quot;template&quot;: &quot;Scooping [something] up with [something]&quot;, &quot;placeholders&quot;: [&quot;powder&quot;, &quot;spoon&quot;]}, {&quot;id&quot;: &quot;49&quot;, &quot;label&quot;: &quot;lifting up one end of hose, then letting it drop down&quot;, &quot;template&quot;: &quot;Lifting up one end of [something], then letting it drop down&quot;, &quot;placeholders&quot;: [&quot;hose&quot;]}]
+</code></pre>
+<h2 id="examples">Examples</h2>
+<pre><code class="language-python">&gt;&gt;&gt; from utils.parser import load_config
+&gt;&gt;&gt; cfg_file = load_config('configs/default.yaml')
+&gt;&gt;&gt; word2int, all_descriptions = get_encoded_text(cfg_file)
+</code></pre></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get_encoded_text(cfg, add_sos=True, add_eos=True):
+    &#34;&#34;&#34;
+    Loads a JSON file with a specific format containing textual action descriptions, encodes them to integers, and
+    returns the word to integer and mapping as well as the integer-encoded-text. The file that will be used is specified
+    in the configuration file under the DATASET category as TRAIN_FILE i.e cfg.DATASET.TRAIN_FILE
+
+    Parameters
+    ----------
+    cfg : utils.parser.AttributeDict
+        A loaded configuration file
+    add_sos : bool
+        Whether to prepend the start-of-sequence at the front of the sequence.
+        Default is True
+    add_eos : bool
+        Whether to append the end-of-sequence at the front of the sequence.
+        Default is True
+
+    Returns
+    -------
+    word2int : dict
+        A dictionary (hashmap) with the words in the dataset as keys and the assigned integer as value
+    all_descriptions : dict
+        A dictionary (hashmap) with an id identifying a data point in the dataset as its key and the integer-encoded
+        text as its value.
+
+    Expected Format for TRAIN FILE
+    ------------------------------
+    The JSON file must contain a list whose elements are dictionaries who have two required keys. The required keys are
+    &#39;id&#39; and &#39;label&#39; containing the id of the data point and the text description corresponding to the data point respectively.
+
+    &gt;&gt;&gt; [{&#34;id&#34;: &#34;45&#34;, &#34;label&#34;: &#34;putting wood onto cable&#34;, &#34;template&#34;: &#34;Putting [something] onto [something]&#34;, &#34;placeholders&#34;: [&#34;wood&#34;, &#34;cable&#34;]}, {&#34;id&#34;: &#34;30&#34;, &#34;label&#34;: &#34;pulling tupperware from right to left&#34;, &#34;template&#34;: &#34;Pulling [something] from right to left&#34;, &#34;placeholders&#34;: [&#34;tupperware&#34;]}, {&#34;id&#34;: &#34;2&#34;, &#34;label&#34;: &#34;pretending to pick a pillow up&#34;, &#34;template&#34;: &#34;Pretending to pick [something] up&#34;, &#34;placeholders&#34;: [&#34;a pillow&#34;]}, {&#34;id&#34;: &#34;9&#34;, &#34;label&#34;: &#34;putting usb behind mouse&#34;, &#34;template&#34;: &#34;Putting [something] behind [something]&#34;, &#34;placeholders&#34;: [&#34;usb&#34;, &#34;mouse&#34;]}, {&#34;id&#34;: &#34;7&#34;, &#34;label&#34;: &#34;pushing flashdisk from right to left&#34;, &#34;template&#34;: &#34;Pushing [something] from right to left&#34;, &#34;placeholders&#34;: [&#34;flashdisk&#34;]}, {&#34;id&#34;: &#34;31&#34;, &#34;label&#34;: &#34;putting coconut kernel&#34;, &#34;template&#34;: &#34;Putting [something similar to other things that are already on the table]&#34;, &#34;placeholders&#34;: [&#34;coconut kernel&#34;]}, {&#34;id&#34;: &#34;33&#34;, &#34;label&#34;: &#34;scooping powder up with spoon&#34;, &#34;template&#34;: &#34;Scooping [something] up with [something]&#34;, &#34;placeholders&#34;: [&#34;powder&#34;, &#34;spoon&#34;]}, {&#34;id&#34;: &#34;49&#34;, &#34;label&#34;: &#34;lifting up one end of hose, then letting it drop down&#34;, &#34;template&#34;: &#34;Lifting up one end of [something], then letting it drop down&#34;, &#34;placeholders&#34;: [&#34;hose&#34;]}]
+
+    Examples
+    ---------
+    &gt;&gt;&gt; from utils.parser import load_config
+    &gt;&gt;&gt; cfg_file = load_config(&#39;configs/default.yaml&#39;)
+    &gt;&gt;&gt; word2int, all_descriptions = get_encoded_text(cfg_file)
+
+    &#34;&#34;&#34;
+    train_filename = cfg.DATASET.TRAIN_FILE
+
+    with open(train_filename) as tf:
+        trainset = json.load(tf)
+
+    word2int = dict()
+    all_int_descriptions = dict()
+    word_id = 3
+    for video in trainset:
+        video_id = video[&#39;id&#39;]
+        description = video[&#39;label&#39;]
+
+        # Remove punctuation from description
+        description = description.translate(str.maketrans(&#39;&#39;, &#39;&#39;, string.punctuation))
+
+        # split on whitespace to get a list of words
+        words = description.split()
+
+        int_description = []
+        if add_sos:
+            int_description.append(cfg.DATASET.SOS)
+
+        # Add all words in lowercase form to count number of words
+        for w in words:
+            if w not in word2int:
+                word2int[w] = word_id
+                int_description.append(word_id)
+                word_id += 1
+            else:
+                int_description.append(word2int[w])
+        if add_eos:
+            int_description.append(cfg.DATASET.EOS)
+        all_int_descriptions[video_id] = int_description
+
+    print(f&#34;{len(word2int)} words were found in Something-Something-v2&#34;)
+    return word2int, all_int_descriptions</code></pre>
+</details>
+</dd>
+<dt id="JEPS.utils.data_utils.get_first_last_frames"><code class="name flex">
+<span>def <span class="ident">get_first_last_frames</span></span>(<span>video_path)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Opens a video whose path is given, loads the first and last frame and returns them.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>video_path</code></strong> :&ensp;<code>str</code></dt>
+<dd>The path to the video from which the frames will be loaded.</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><strong><code>first_frame</code></strong> :&ensp;<code>numpy.ndarray</code></dt>
+<dd>The loaded first frame of the video with shape (height, width, 3)</dd>
+<dt><strong><code>last_frame</code></strong> :&ensp;<code>numpy.ndarray</code></dt>
+<dd>The loaded last frame of the video with shape (height, width, 3)</dd>
+</dl>
+<h2 id="examples">Examples</h2>
+<pre><code class="language-python">&gt;&gt;&gt; import matplotlib.pyplot as plt
+&gt;&gt;&gt; first, last = get_first_last_frames(&quot;data/20bn-something-something-v2/2.webm&quot;)
+&gt;&gt;&gt; plt.imshow(first)
+&gt;&gt;&gt; plt.figure()
+&gt;&gt;&gt; plt.imshow(last)
+&gt;&gt;&gt; plt.show()
+</code></pre></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get_first_last_frames(video_path):
+    &#34;&#34;&#34;
+    Opens a video whose path is given, loads the first and last frame and returns them.
+
+    Parameters
+    ----------
+    video_path : str
+        The path to the video from which the frames will be loaded.
+
+    Returns
+    -------
+    first_frame : numpy.ndarray
+        The loaded first frame of the video with shape (height, width, 3)
+    last_frame : numpy.ndarray
+        The loaded last frame of the video with shape (height, width, 3)
+
+    Examples
+    --------
+    &gt;&gt;&gt; import matplotlib.pyplot as plt
+    &gt;&gt;&gt; first, last = get_first_last_frames(&#34;data/20bn-something-something-v2/2.webm&#34;)
+    &gt;&gt;&gt; plt.imshow(first)
+    &gt;&gt;&gt; plt.figure()
+    &gt;&gt;&gt; plt.imshow(last)
+    &gt;&gt;&gt; plt.show()
+    &#34;&#34;&#34;
+    vs = cv2.VideoCapture(video_path)
+    last_frame_num = vs.get(cv2.CAP_PROP_FRAME_COUNT) - 1
+    ret, first_frame = vs.read()
+
+    if not ret:
+        raise RuntimeError(f&#34;Unable to read first frame from {video_path}&#34;)
+    # Seek the last frame
+    vs.set(cv2.CAP_PROP_POS_FRAMES, last_frame_num)
+
+    ret, last_frame = vs.read()
+    if not ret:
+        raise RuntimeError(f&#34;Unable to read last frame from {video_path}&#34;)
+
+    vs.release()
+    return first_frame, last_frame</code></pre>
+</details>
+</dd>
+<dt id="JEPS.utils.data_utils.one_hot"><code class="name flex">
+<span>def <span class="ident">one_hot</span></span>(<span>tensor, num_classes=-1)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Takes LongTensor with index values of shape <code>(*)</code> and returns a tensor
+of shape <code>(*, num_classes)</code> that have zeros everywhere except where the
+index of last dimension matches the corresponding value of the input tensor,
+in which case it will be 1.</p>
+<p>See also <code>One-hot on Wikipedia</code>_ .</p>
+<p>.. _One-hot on Wikipedia:
+<a href="https://en.wikipedia.org/wiki/One-hot">https://en.wikipedia.org/wiki/One-hot</a></p>
+<h2 id="arguments">Arguments</h2>
+<p>tensor (LongTensor): class values of any shape.
+num_classes (int):
+Total number of classes. If set to -1, the number
+of classes will be inferred as one greater than the largest class
+value in the input tensor.</p>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>LongTensor that has one more dimension with 1 values at the</code></dt>
+<dd>&nbsp;</dd>
+<dt><code>index</code> of <code>last dimension indicated by the input, and 0 everywhere</code></dt>
+<dd>&nbsp;</dd>
+</dl>
+<p>else.</p>
+<h2 id="examples">Examples</h2>
+<pre><code class="language-python">&gt;&gt;&gt; F.one_hot(torch.arange(0, 5) % 3)
+tensor([[1, 0, 0],
+        [0, 1, 0],
+        [0, 0, 1],
+        [1, 0, 0],
+        [0, 1, 0]])
+&gt;&gt;&gt; F.one_hot(torch.arange(0, 5) % 3, num_classes=5)
+tensor([[1, 0, 0, 0, 0],
+        [0, 1, 0, 0, 0],
+        [0, 0, 1, 0, 0],
+        [1, 0, 0, 0, 0],
+        [0, 1, 0, 0, 0]])
+&gt;&gt;&gt; F.one_hot(torch.arange(0, 6).view(3,2) % 3)
+tensor([[[1, 0, 0],
+         [0, 1, 0]],
+        [[0, 0, 1],
+         [1, 0, 0]],
+        [[0, 1, 0],
+         [0, 0, 1]]])
+</code></pre></div>
+</dd>
+</dl>
+</section>
+<section>
+</section>
+</article>
+<nav id="sidebar">
+<h1>Index</h1>
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="JEPS.utils" href="index.html">JEPS.utils</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-functions">Functions</a></h3>
+<ul class="">
+<li><code><a title="JEPS.utils.data_utils.generate_motor_command_sequence" href="#JEPS.utils.data_utils.generate_motor_command_sequence">generate_motor_command_sequence</a></code></li>
+<li><code><a title="JEPS.utils.data_utils.get_bacth" href="#JEPS.utils.data_utils.get_bacth">get_bacth</a></code></li>
+<li><code><a title="JEPS.utils.data_utils.get_encoded_text" href="#JEPS.utils.data_utils.get_encoded_text">get_encoded_text</a></code></li>
+<li><code><a title="JEPS.utils.data_utils.get_first_last_frames" href="#JEPS.utils.data_utils.get_first_last_frames">get_first_last_frames</a></code></li>
+<li><code><a title="JEPS.utils.data_utils.one_hot" href="#JEPS.utils.data_utils.one_hot">one_hot</a></code></li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc"><cite>pdoc</cite> 0.8.1</a>.</p>
+</footer>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad()</script>
+</body>
+</html>

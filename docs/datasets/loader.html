@@ -1,0 +1,365 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+<meta name="generator" content="pdoc 0.8.1" />
+<title>JEPS.datasets.loader API documentation</title>
+<meta name="description" content="" />
+<link href='https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.0/normalize.min.css' rel='stylesheet'>
+<link href='https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/8.0.0/sanitize.min.css' rel='stylesheet'>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" rel="stylesheet">
+<style>.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}a{color:#058;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:#f2f2f1;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{background:#f8f8f8;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}.admonition{padding:.1em .5em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.item .name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul{padding-left:1.5em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script async src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS_CHTML'></script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>JEPS.datasets.loader</code></h1>
+</header>
+<section id="section-intro">
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">import torch
+from torch.nn.utils.rnn import pad_sequence
+import datasets.video_text_datasets
+
+
+def build_dataset(dataset_name, cfg):
+    &#34;&#34;&#34;
+    Instantiates an object from a torch.utils.data.Dataset subclass whose name is given and returns it.
+
+    Parameters
+    ----------
+    dataset_name : str
+        The name of the torch.utils.data.Dataset subclass
+    cfg : utils.parser.AttributeDict
+        A loaded configuration object to be passed to the object to be instantiated
+
+    Returns
+    -------
+    The instantiated object.
+
+    Examples
+    ---------
+    &gt;&gt;&gt; from utils.parser import load_config
+    &gt;&gt;&gt; cfg_file = load_config(&#39;configs/default.yaml&#39;)
+    &gt;&gt;&gt; dset = build_dataset(&#39;SomethingSomethingV2Dataset&#39;, cfg_file)
+
+    &#34;&#34;&#34;
+    dataset_class = getattr(datasets.video_text_datasets, dataset_name)
+
+    return dataset_class(cfg)
+
+
+def construct_loader(cfg):
+    &#34;&#34;&#34;
+    Instantiates a torch.utils.data.DataLoader object using settings specified in a loaded configuration object.
+
+    Parameters
+    ----------
+    cfg : utils.parser.AttributeDict
+        The loaded configuration object
+
+    Returns
+    -------
+    A torch.utils.data.DataLoader object
+
+    Examples
+    ---------
+    &gt;&gt;&gt; from utils.parser import load_config
+    &gt;&gt;&gt; cfg_file = load_config(&#39;configs/default.yaml&#39;)
+    &gt;&gt;&gt; loader = construct_loader(cfg_file)
+
+    &#34;&#34;&#34;
+    dataset_name = cfg.TRAIN.DATASET
+    batch_size = cfg.TRAIN.BATCH_SIZE
+    shuffle = cfg.TRAIN.SHUFFLE
+    drop_last = cfg.TRAIN.DROP_LAST
+
+    dataset = build_dataset(dataset_name, cfg)
+    loader = torch.utils.data.DataLoader(
+        dataset,
+        batch_size=batch_size,
+        shuffle=shuffle,
+        num_workers=cfg.TRAIN.NUM_WORKERS,
+        pin_memory=cfg.TRAIN.PIN_MEMORY,
+        drop_last=drop_last,
+        collate_fn=something_something_collate,
+    )
+    return loader
+
+
+def something_something_collate(batch):
+    &#34;&#34;&#34;
+    This function takes a batch of data loaded through the datasets.datasets.SomethingSomethingV2Dataset and pads the
+    loaded text and motor command sequence to the same size.
+
+    Parameters
+    ----------
+    batch : list
+        A batch of data automatically passed to this function by a torch.utils.data.DataLoader object.
+
+    Returns
+    -------
+    A tuple of perceived image, goal image, padded text, padded motor command sequence, lengths of text sequences, and
+    lengths of motor command sequences.
+    &#34;&#34;&#34;
+    per_img, goal_img, text, commands, lengths_text, lengths_cmd = [list(item) for item in zip(*batch)]
+
+    # Account for the 1 subtracted in the __getitem__ in the dataset class by adding it back here
+    max_len_text = max(lengths_text) + 1
+    max_len_cmd = max(lengths_cmd) + 1
+    if max_len_text &gt; max_len_cmd:
+        len_first = len(commands[0])
+        # Make sure that the first sequence contains max_len_text number of entries so padded size for
+        # the two sequences will be the same
+        length_diff = max_len_text - len_first
+        commands[0] = torch.cat(commands[0], torch.zeros((length_diff, )).long())
+
+    elif max_len_cmd &gt; max_len_text:
+        len_first = len(text[0])
+        # Make sure that the first sequence contains max_len_cmd number of entries so padded size for
+        # the two sequences will be the same
+        length_diff = max_len_cmd - len_first
+        text[0] = torch.cat([text[0], torch.zeros((length_diff, ))])
+
+    text = pad_sequence(text, batch_first=True)
+    commands = pad_sequence(commands, batch_first=True)
+
+    return torch.stack(per_img), torch.stack(goal_img), text, commands, lengths_text, lengths_cmd
+
+
+if __name__ == &#39;__main__&#39;:
+    import matplotlib.pyplot as plt
+    from utils.parser import load_config
+    cfg_file = load_config(&#39;configs/default.yaml&#39;)
+
+    # dset = build_dataset(&#39;SomethingSomethingV2Dataset&#39;, cfg_file)
+
+    loader = construct_loader(cfg_file)
+    for per_img, goal_img, text, commands, lengths_text, lengths_cmd in loader:
+        print(per_img.shape, goal_img.shape, text.shape, commands.shape, lengths_text, lengths_cmd)
+
+    # for i in [24837, 50991, 53527, 88403, 89674, 94590, 131723, 141318]:
+    #     dset[i]</code></pre>
+</details>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-functions">Functions</h2>
+<dl>
+<dt id="JEPS.datasets.loader.build_dataset"><code class="name flex">
+<span>def <span class="ident">build_dataset</span></span>(<span>dataset_name, cfg)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Instantiates an object from a torch.utils.data.Dataset subclass whose name is given and returns it.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>dataset_name</code></strong> :&ensp;<code>str</code></dt>
+<dd>The name of the torch.utils.data.Dataset subclass</dd>
+<dt><strong><code>cfg</code></strong> :&ensp;<code>utils.parser.AttributeDict</code></dt>
+<dd>A loaded configuration object to be passed to the object to be instantiated</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<p>The instantiated object.</p>
+<h2 id="examples">Examples</h2>
+<pre><code class="language-python">&gt;&gt;&gt; from utils.parser import load_config
+&gt;&gt;&gt; cfg_file = load_config('configs/default.yaml')
+&gt;&gt;&gt; dset = build_dataset('SomethingSomethingV2Dataset', cfg_file)
+</code></pre></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def build_dataset(dataset_name, cfg):
+    &#34;&#34;&#34;
+    Instantiates an object from a torch.utils.data.Dataset subclass whose name is given and returns it.
+
+    Parameters
+    ----------
+    dataset_name : str
+        The name of the torch.utils.data.Dataset subclass
+    cfg : utils.parser.AttributeDict
+        A loaded configuration object to be passed to the object to be instantiated
+
+    Returns
+    -------
+    The instantiated object.
+
+    Examples
+    ---------
+    &gt;&gt;&gt; from utils.parser import load_config
+    &gt;&gt;&gt; cfg_file = load_config(&#39;configs/default.yaml&#39;)
+    &gt;&gt;&gt; dset = build_dataset(&#39;SomethingSomethingV2Dataset&#39;, cfg_file)
+
+    &#34;&#34;&#34;
+    dataset_class = getattr(datasets.video_text_datasets, dataset_name)
+
+    return dataset_class(cfg)</code></pre>
+</details>
+</dd>
+<dt id="JEPS.datasets.loader.construct_loader"><code class="name flex">
+<span>def <span class="ident">construct_loader</span></span>(<span>cfg)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Instantiates a torch.utils.data.DataLoader object using settings specified in a loaded configuration object.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>cfg</code></strong> :&ensp;<code>utils.parser.AttributeDict</code></dt>
+<dd>The loaded configuration object</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>A torch.utils.data.DataLoader object</code></dt>
+<dd>&nbsp;</dd>
+</dl>
+<h2 id="examples">Examples</h2>
+<pre><code class="language-python">&gt;&gt;&gt; from utils.parser import load_config
+&gt;&gt;&gt; cfg_file = load_config('configs/default.yaml')
+&gt;&gt;&gt; loader = construct_loader(cfg_file)
+</code></pre></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def construct_loader(cfg):
+    &#34;&#34;&#34;
+    Instantiates a torch.utils.data.DataLoader object using settings specified in a loaded configuration object.
+
+    Parameters
+    ----------
+    cfg : utils.parser.AttributeDict
+        The loaded configuration object
+
+    Returns
+    -------
+    A torch.utils.data.DataLoader object
+
+    Examples
+    ---------
+    &gt;&gt;&gt; from utils.parser import load_config
+    &gt;&gt;&gt; cfg_file = load_config(&#39;configs/default.yaml&#39;)
+    &gt;&gt;&gt; loader = construct_loader(cfg_file)
+
+    &#34;&#34;&#34;
+    dataset_name = cfg.TRAIN.DATASET
+    batch_size = cfg.TRAIN.BATCH_SIZE
+    shuffle = cfg.TRAIN.SHUFFLE
+    drop_last = cfg.TRAIN.DROP_LAST
+
+    dataset = build_dataset(dataset_name, cfg)
+    loader = torch.utils.data.DataLoader(
+        dataset,
+        batch_size=batch_size,
+        shuffle=shuffle,
+        num_workers=cfg.TRAIN.NUM_WORKERS,
+        pin_memory=cfg.TRAIN.PIN_MEMORY,
+        drop_last=drop_last,
+        collate_fn=something_something_collate,
+    )
+    return loader</code></pre>
+</details>
+</dd>
+<dt id="JEPS.datasets.loader.something_something_collate"><code class="name flex">
+<span>def <span class="ident">something_something_collate</span></span>(<span>batch)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>This function takes a batch of data loaded through the datasets.datasets.SomethingSomethingV2Dataset and pads the
+loaded text and motor command sequence to the same size.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>batch</code></strong> :&ensp;<code>list</code></dt>
+<dd>A batch of data automatically passed to this function by a torch.utils.data.DataLoader object.</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>A tuple</code> of <code>perceived image, goal image, padded text, padded motor command sequence, lengths</code> of <code>text sequences, and</code></dt>
+<dd>&nbsp;</dd>
+</dl>
+<p>lengths of motor command sequences.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def something_something_collate(batch):
+    &#34;&#34;&#34;
+    This function takes a batch of data loaded through the datasets.datasets.SomethingSomethingV2Dataset and pads the
+    loaded text and motor command sequence to the same size.
+
+    Parameters
+    ----------
+    batch : list
+        A batch of data automatically passed to this function by a torch.utils.data.DataLoader object.
+
+    Returns
+    -------
+    A tuple of perceived image, goal image, padded text, padded motor command sequence, lengths of text sequences, and
+    lengths of motor command sequences.
+    &#34;&#34;&#34;
+    per_img, goal_img, text, commands, lengths_text, lengths_cmd = [list(item) for item in zip(*batch)]
+
+    # Account for the 1 subtracted in the __getitem__ in the dataset class by adding it back here
+    max_len_text = max(lengths_text) + 1
+    max_len_cmd = max(lengths_cmd) + 1
+    if max_len_text &gt; max_len_cmd:
+        len_first = len(commands[0])
+        # Make sure that the first sequence contains max_len_text number of entries so padded size for
+        # the two sequences will be the same
+        length_diff = max_len_text - len_first
+        commands[0] = torch.cat(commands[0], torch.zeros((length_diff, )).long())
+
+    elif max_len_cmd &gt; max_len_text:
+        len_first = len(text[0])
+        # Make sure that the first sequence contains max_len_cmd number of entries so padded size for
+        # the two sequences will be the same
+        length_diff = max_len_cmd - len_first
+        text[0] = torch.cat([text[0], torch.zeros((length_diff, ))])
+
+    text = pad_sequence(text, batch_first=True)
+    commands = pad_sequence(commands, batch_first=True)
+
+    return torch.stack(per_img), torch.stack(goal_img), text, commands, lengths_text, lengths_cmd</code></pre>
+</details>
+</dd>
+</dl>
+</section>
+<section>
+</section>
+</article>
+<nav id="sidebar">
+<h1>Index</h1>
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="JEPS.datasets" href="index.html">JEPS.datasets</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-functions">Functions</a></h3>
+<ul class="">
+<li><code><a title="JEPS.datasets.loader.build_dataset" href="#JEPS.datasets.loader.build_dataset">build_dataset</a></code></li>
+<li><code><a title="JEPS.datasets.loader.construct_loader" href="#JEPS.datasets.loader.construct_loader">construct_loader</a></code></li>
+<li><code><a title="JEPS.datasets.loader.something_something_collate" href="#JEPS.datasets.loader.something_something_collate">something_something_collate</a></code></li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc"><cite>pdoc</cite> 0.8.1</a>.</p>
+</footer>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad()</script>
+</body>
+</html>

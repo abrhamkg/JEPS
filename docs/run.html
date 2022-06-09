@@ -1,0 +1,833 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+<meta name="generator" content="pdoc 0.8.1" />
+<title>JEPS.run API documentation</title>
+<meta name="description" content="" />
+<link href='https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.0/normalize.min.css' rel='stylesheet'>
+<link href='https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/8.0.0/sanitize.min.css' rel='stylesheet'>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" rel="stylesheet">
+<style>.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}a{color:#058;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:#f2f2f1;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{background:#f8f8f8;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}.admonition{padding:.1em .5em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.item .name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul{padding-left:1.5em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script async src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS_CHTML'></script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>JEPS.run</code></h1>
+</header>
+<section id="section-intro">
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">import torch
+from utils.parser import parse_args, load_config
+from datasets.loader import construct_loader
+from models.jeps_models import AutoencoderJEPS, CompositeJEPS, Generator, EncoderDecoderRNN, MultimodalRNNJEPS, Discriminator
+from models.losses import get_loss_func
+import torch.optim as optim
+import time
+from torch.nn.functional import one_hot
+
+
+def train_GAN(cfg):
+    num_epochs = cfg.TRAIN.MAX_EPOCH
+    dataloader = construct_loader(cfg)
+    device = &#34;cuda:0&#34; if torch.cuda.is_available() else &#34;cpu&#34;
+    nz = cfg.COMPOSITE.GENERATOR_LATENT_DIM
+    real_label = 1.
+    fake_label = 0.
+
+    netD = Discriminator(cfg).to(device)
+    netG = Generator(cfg).to(device)
+
+    criterion = get_loss_func(&#34;bce&#34;)(reduction=cfg.MODEL.REDUCTION)
+    img_list = []
+    G_losses = []
+    D_losses = []
+    iters = 0
+
+    optimizerD = optim.Adam(netD.parameters(), lr=cfg.MODEL.LEARNING_RATE, betas=(0.5, 0.999))
+    optimizerG = optim.Adam(netG.parameters(), lr=cfg.MODEL.LEARNING_RATE, betas=(0.5, 0.999))
+
+    print(&#34;Starting GAN training:&#34;)
+    for epoch in range(num_epochs):
+        # For each batch in the dataloader
+        for i, data in enumerate(dataloader, 0):
+            per_img, goal_img, text, commands, lengths_text, lengths_cmd = data
+            # per_img = per_img.to(device)
+            goal_img = goal_img.to(device)
+            text = text.to(device)
+            commands = commands.to(device)
+
+            ############################
+            # (1) Update D network: maximize log(D(x)) + log(1 - D(G(z)))
+            ###########################
+            ## Train with all-real batch
+            netD.zero_grad()
+            # Format batch
+            real_cpu = goal_img #data[0].to(device)
+            b_size = real_cpu.size(0)
+            label = torch.full((b_size,), real_label, dtype=torch.float, device=device)
+            # Forward pass real batch through D
+            output = netD(real_cpu, text, commands, lengths_text, lengths_cmd).view(-1)
+            # Calculate loss on all-real batch
+            errD_real = criterion(output, label)
+            # Calculate gradients for D in backward pass
+            errD_real.backward()
+            D_x = output.mean().item()
+
+            ## Train with all-fake batch
+            # Generate batch of latent vectors
+            noise = torch.randn(b_size, nz, 1, 1, device=device)
+            # Generate fake image batch with G
+            fake = netG(noise, text, commands, lengths_text, lengths_cmd)
+            label.fill_(fake_label)
+            # Classify all fake batch with D
+            output = netD(fake.detach(), text, commands, lengths_text, lengths_cmd).view(-1)
+            # Calculate D&#39;s loss on the all-fake batch
+            errD_fake = criterion(output, label)
+            # Calculate the gradients for this batch, accumulated (summed) with previous gradients
+            errD_fake.backward()
+            D_G_z1 = output.mean().item()
+            # Compute error of D as sum over the fake and the real batches
+            errD = errD_real + errD_fake
+            # Update D
+            optimizerD.step()
+
+            ############################
+            # (2) Update G network: maximize log(D(G(z)))
+            ###########################
+            netG.zero_grad()
+            label.fill_(real_label)  # fake labels are real for generator cost
+            # Since we just updated D, perform another forward pass of all-fake batch through D
+            output = netD(fake, text, commands, lengths_text, lengths_cmd).view(-1)
+            # Calculate G&#39;s loss based on this output
+            errG = criterion(output, label)
+            # Calculate gradients for G
+            errG.backward()
+            D_G_z2 = output.mean().item()
+            # Update G
+            optimizerG.step()
+
+            # Output training stats
+            if i % 50 == 0:
+                print(&#39;[%d/%d][%d/%d]\tLoss_D: %.4f\tLoss_G: %.4f\tD(x): %.4f\tD(G(z)): %.4f / %.4f&#39;
+                      % (epoch, num_epochs, i, len(dataloader),
+                         errD.item(), errG.item(), D_x, D_G_z1, D_G_z2))
+
+            # Save Losses for plotting later
+            G_losses.append(errG.item())
+            D_losses.append(errD.item())
+
+            # Check how the generator is doing by saving G&#39;s output on fixed_noise
+            # if (iters % 500 == 0) or ((epoch == num_epochs - 1) and (i == len(dataloader) - 1)):
+            #     with torch.no_grad():
+            #         fake = netG(fixed_noise).detach().cpu()
+            #     img_list.append(vutils.make_grid(fake, padding=2, normalize=True))
+
+            iters += 1
+
+    ckpt_path = f&#34;{cfg.MODEL.CHECKPOINT_DIR}/Generator_{time.time()}.pth&#34;
+    print(&#34;Saving checkpoint to &#34;, ckpt_path)
+    torch.save(netG, ckpt_path)
+
+
+def train_AEJEPS(cfg):
+    num_epochs = cfg.TRAIN.MAX_EPOCH
+    dataloader = construct_loader(cfg)
+
+    device = &#34;cuda:0&#34; if torch.cuda.is_available() else &#34;cpu&#34;
+    model = AutoencoderJEPS(cfg).to(device)
+    loss_type = &#34;aejeps_loss&#34;
+
+    criterion = get_loss_func(loss_type)(reduction=&#34;none&#34;)
+
+    optimizer = optim.Adam(model.parameters(), lr=cfg.MODEL.LEARNING_RATE, betas=(0.5, 0.999))
+
+    print(&#34;Started Autoencoder JEPS training&#34;)
+    for epoch in range(num_epochs):
+        # For each batch in the dataloader
+        for batch_idx, data in enumerate(dataloader, 0):
+            per_img, goal_img, text, commands, lengths_text, lengths_cmd = data
+            per_img = per_img.to(device)
+            goal_img = goal_img.to(device)
+            text = text.to(device)
+            commands = commands.to(device)
+
+            batch_size = per_img.shape[0]
+
+            train_text, text_target = text[:, :-1], text[:, 1:]
+            train_cmd, cmd_target = commands[:, :-1, :], commands[:, 1:, :]
+
+            goal_img_out, text_out, cmd_out = model(per_img, goal_img, train_text, train_cmd, lengths_text, lengths_cmd)
+
+            if loss_type == &#34;aejeps_loss&#34;:
+                text_out = torch.argmax(text_out, 2)
+                cmd_out = torch.argmax(cmd_out, 2)
+                cmd_target = torch.argmax(cmd_target, 2)
+            loss_img, loss_text, loss_cmd = criterion(goal_img_out, text_out, cmd_out, goal_img, text_target, cmd_target)
+
+            mask_text = torch.zeros(text_out.size()).to(device)
+            for i in range(batch_size):
+                mask_text[i, :lengths_text[i]] = 1
+
+            # mask_text = mask_text.view(-1).to(device)
+
+            mask_cmd = torch.zeros(cmd_out.size()).to(device)
+
+            for i in range(batch_size):
+                mask_cmd[i, :lengths_text[i]] = 1
+
+            # mask_cmd = mask_cmd.view(-1).to(device)
+
+            masked_loss_text = torch.sum(loss_text * mask_text) / torch.sum(mask_text, 1)
+            masked_loss_cmd = torch.sum(loss_cmd * mask_cmd) / torch.sum(mask_cmd, 1)
+
+            loss = torch.mean(loss_img) + torch.mean(masked_loss_text) + torch.mean(masked_loss_cmd)# / batch_size
+            loss.backward()
+
+            optimizer.step()
+
+            # Output training stats
+            if batch_idx % 50 == 0:
+                print(&#39;[%d/%d][%d/%d]\tLoss: %.4f\t&#39;
+                      % (epoch, num_epochs, batch_idx, len(dataloader), loss))
+
+    ckpt_path = f&#34;{cfg.MODEL.CHECKPOINT_DIR}/AEJEPS_{time.time()}.pth&#34;
+    print(&#34;Saving checkpoint to &#34;, ckpt_path)
+    torch.save(model, ckpt_path)
+
+
+def train_textRNN(cfg):
+    num_epochs = cfg.TRAIN.MAX_EPOCH
+    dataloader = construct_loader(cfg)
+
+    device = &#34;cuda:0&#34; if torch.cuda.is_available() else &#34;cpu&#34;
+    vocabulary_size = cfg.DATASET.VOCABULARY_SIZE
+    num_commands = cfg.DATASET.NUM_COMMANDS
+    sos = cfg.DATASET.SOS
+    eos = cfg.DATASET.EOS
+    embedding_dim = cfg.COMPOSITE.EMBEDDING_DIM
+    tg_enc_dim = cfg.COMPOSITE.TG_ENCODER_HIDDEN_DIM
+    # tg_dec_dim = cfg.COMPOSITE.TG_DECODER_HIDDEN_DIM
+    tg_enc_nlayers = cfg.COMPOSITE.TG_ENCODER_NUM_LAYERS
+    tg_bidirectional = cfg.COMPOSITE.TG_BIDIRECTIONAL
+
+    loss_type = &#34;mse&#34;
+    model = EncoderDecoderRNN(num_commands, tg_enc_dim, tg_enc_nlayers, vocabulary_size,
+                                            embedding_dim, sos, eos, tg_bidirectional, text_sequence=2).to(device)
+
+    # for m in model.parameters():
+    #     print(m.requires_grad)
+
+    criterion = get_loss_func(loss_type)(reduction=&#34;none&#34;)
+
+    optimizer = optim.Adam(model.parameters(), lr=cfg.MODEL.LEARNING_RATE, betas=(0.5, 0.999))
+
+    print(&#34;Started Text LSTM training&#34;)
+
+    for epoch in range(num_epochs):
+        # For each batch in the dataloader
+        for batch_idx, data in enumerate(dataloader, 0):
+            per_img, goal_img, text, commands, lengths_text, lengths_cmd = data
+            per_img = per_img.to(device)
+            goal_img = goal_img.to(device)
+            text = text.to(device)
+            commands = commands.to(device)
+
+            batch_size = per_img.shape[0]
+
+            train_text, text_target = text[:, :-1], text[:, 1:]
+            train_cmd, cmd_target = commands[:, :-1, :], commands[:, 1:, :]
+
+            text_out = model(per_img, goal_img, train_cmd, train_text, lengths_text, &#39;train&#39;)
+            if loss_type == &#34;mse&#34;:
+                text_target = one_hot(text_target.long(), num_classes=text_out.shape[2]).float()
+
+
+            loss_text = criterion(text_out, text_target)
+
+            mask_text = torch.zeros(text_out.size()).to(device)
+            for i in range(batch_size):
+                mask_text[i, :lengths_text[i]] = 1
+
+            # mask_text = mask_text.view(-1).to(device)
+
+            masked_loss_text = torch.sum(loss_text * mask_text) / torch.sum(mask_text, 1)
+
+            loss = torch.mean(masked_loss_text) # / batch_size
+
+            loss.backward()
+
+            optimizer.step()
+
+            # Output training stats
+            if batch_idx % 50 == 0:
+                print(&#39;[%d/%d][%d/%d]\tLoss: %.4f\t&#39;
+                      % (epoch, num_epochs, batch_idx, len(dataloader), loss))
+
+    ckpt_path = f&#34;{cfg.MODEL.CHECKPOINT_DIR}/TextRNN_{time.time()}.pth&#34;
+    print(&#34;Saving checkpoint to &#34;, ckpt_path)
+    torch.save(model, ckpt_path)
+
+
+def train_cmdRNN(cfg):
+    num_epochs = cfg.TRAIN.MAX_EPOCH
+    dataloader = construct_loader(cfg)
+
+    device = &#34;cuda:0&#34; if torch.cuda.is_available() else &#34;cpu&#34;
+    vocabulary_size = cfg.DATASET.VOCABULARY_SIZE
+    num_commands = cfg.DATASET.NUM_COMMANDS
+    sos = cfg.DATASET.SOS
+    eos = cfg.DATASET.EOS
+    embedding_dim = cfg.COMPOSITE.EMBEDDING_DIM
+    cg_enc_dim = cfg.COMPOSITE.CG_ENCODER_HIDDEN_DIM
+    # cg_dec_dim = cfg.COMPOSITE.CG_DECODER_HIDDEN_DIM
+    cg_enc_nlayers = cfg.COMPOSITE.CG_ENCODER_NUM_LAYERS
+    cg_bidirectional = cfg.COMPOSITE.CG_BIDIRECTIONAL
+
+    loss_type = &#34;mse&#34;
+    model = EncoderDecoderRNN(vocabulary_size, cg_enc_dim, cg_enc_nlayers, num_commands,
+                                               embedding_dim, sos, eos, cg_bidirectional, text_sequence=1).to(device)
+
+
+    criterion = get_loss_func(loss_type)(reduction=cfg.MODEL.REDUCTION)
+
+    optimizer = optim.Adam(model.parameters(), lr=cfg.MODEL.LEARNING_RATE, betas=(0.5, 0.999))
+
+    print(&#34;Started Motor Command LSTM training&#34;)
+
+    for epoch in range(num_epochs):
+        # For each batch in the dataloader
+        for batch_idx, data in enumerate(dataloader, 0):
+            per_img, goal_img, text, commands, lengths_text, lengths_cmd = data
+            per_img = per_img.to(device)
+            goal_img = goal_img.to(device)
+            text = text.to(device)
+            commands = commands.to(device)
+
+            batch_size = per_img.shape[0]
+
+            train_text, text_target = text[:, :-1], text[:, 1:]
+            train_cmd, cmd_target = commands[:, :-1, :], commands[:, 1:, :]
+
+            cmd_out = model(per_img, goal_img, train_text, train_cmd, lengths_text, &#39;train&#39;)
+
+
+            loss_cmd = criterion(cmd_out, cmd_target)
+
+            mask_cmd = torch.zeros(cmd_out.size()).to(device)
+            for i in range(batch_size):
+                mask_cmd[i, :lengths_text[i]] = 1
+
+            # mask_cmd = mask_cmd.view(-1).to(device)
+
+            masked_loss_cmd = torch.sum(loss_cmd * mask_cmd) / torch.sum(mask_cmd, 1)
+
+            loss = torch.mean(masked_loss_cmd) # / batch_size
+            loss.backward()
+
+            optimizer.step()
+
+            # Output training stats
+            if batch_idx % 50 == 0:
+                print(&#39;[%d/%d][%d/%d]\tLoss: %.4f\t&#39;
+                      % (epoch, num_epochs, batch_idx, len(dataloader), loss))
+
+    ckpt_path = f&#34;{cfg.MODEL.CHECKPOINT_DIR}/CommandsRNN_{time.time()}.pth&#34;
+    print(&#34;Saving checkpoint to &#34;, ckpt_path)
+    torch.save(model, ckpt_path)
+
+
+def main(cfg_path):
+    cfg = load_config(cfg_path)
+
+    if cfg.RUN.MODE == &#34;train_gan&#34;:
+        train_GAN(cfg)
+
+    elif cfg.RUN.MODE == &#34;train_aejeps&#34;:
+        train_AEJEPS(cfg)
+
+    elif cfg.RUN.MODE == &#34;train_textrnn&#34;:
+        train_textRNN(cfg)
+
+    elif cfg.RUN.MODE == &#34;train_cmdrnn&#34;:
+        train_cmdRNN(cfg)
+    else:
+        raise NotImplementedError(f&#34;{cfg.RUN.MODE} training not implemented&#34;)
+
+
+if __name__ == &#39;__main__&#39;:
+    args = parse_args()
+    main(args.cfg_path)</code></pre>
+</details>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-functions">Functions</h2>
+<dl>
+<dt id="JEPS.run.main"><code class="name flex">
+<span>def <span class="ident">main</span></span>(<span>cfg_path)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def main(cfg_path):
+    cfg = load_config(cfg_path)
+
+    if cfg.RUN.MODE == &#34;train_gan&#34;:
+        train_GAN(cfg)
+
+    elif cfg.RUN.MODE == &#34;train_aejeps&#34;:
+        train_AEJEPS(cfg)
+
+    elif cfg.RUN.MODE == &#34;train_textrnn&#34;:
+        train_textRNN(cfg)
+
+    elif cfg.RUN.MODE == &#34;train_cmdrnn&#34;:
+        train_cmdRNN(cfg)
+    else:
+        raise NotImplementedError(f&#34;{cfg.RUN.MODE} training not implemented&#34;)</code></pre>
+</details>
+</dd>
+<dt id="JEPS.run.one_hot"><code class="name flex">
+<span>def <span class="ident">one_hot</span></span>(<span>tensor, num_classes=-1)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Takes LongTensor with index values of shape <code>(*)</code> and returns a tensor
+of shape <code>(*, num_classes)</code> that have zeros everywhere except where the
+index of last dimension matches the corresponding value of the input tensor,
+in which case it will be 1.</p>
+<p>See also <code>One-hot on Wikipedia</code>_ .</p>
+<p>.. _One-hot on Wikipedia:
+<a href="https://en.wikipedia.org/wiki/One-hot">https://en.wikipedia.org/wiki/One-hot</a></p>
+<h2 id="arguments">Arguments</h2>
+<p>tensor (LongTensor): class values of any shape.
+num_classes (int):
+Total number of classes. If set to -1, the number
+of classes will be inferred as one greater than the largest class
+value in the input tensor.</p>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>LongTensor that has one more dimension with 1 values at the</code></dt>
+<dd>&nbsp;</dd>
+<dt><code>index</code> of <code>last dimension indicated by the input, and 0 everywhere</code></dt>
+<dd>&nbsp;</dd>
+</dl>
+<p>else.</p>
+<h2 id="examples">Examples</h2>
+<pre><code class="language-python">&gt;&gt;&gt; F.one_hot(torch.arange(0, 5) % 3)
+tensor([[1, 0, 0],
+        [0, 1, 0],
+        [0, 0, 1],
+        [1, 0, 0],
+        [0, 1, 0]])
+&gt;&gt;&gt; F.one_hot(torch.arange(0, 5) % 3, num_classes=5)
+tensor([[1, 0, 0, 0, 0],
+        [0, 1, 0, 0, 0],
+        [0, 0, 1, 0, 0],
+        [1, 0, 0, 0, 0],
+        [0, 1, 0, 0, 0]])
+&gt;&gt;&gt; F.one_hot(torch.arange(0, 6).view(3,2) % 3)
+tensor([[[1, 0, 0],
+         [0, 1, 0]],
+        [[0, 0, 1],
+         [1, 0, 0]],
+        [[0, 1, 0],
+         [0, 0, 1]]])
+</code></pre></div>
+</dd>
+<dt id="JEPS.run.train_AEJEPS"><code class="name flex">
+<span>def <span class="ident">train_AEJEPS</span></span>(<span>cfg)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def train_AEJEPS(cfg):
+    num_epochs = cfg.TRAIN.MAX_EPOCH
+    dataloader = construct_loader(cfg)
+
+    device = &#34;cuda:0&#34; if torch.cuda.is_available() else &#34;cpu&#34;
+    model = AutoencoderJEPS(cfg).to(device)
+    loss_type = &#34;aejeps_loss&#34;
+
+    criterion = get_loss_func(loss_type)(reduction=&#34;none&#34;)
+
+    optimizer = optim.Adam(model.parameters(), lr=cfg.MODEL.LEARNING_RATE, betas=(0.5, 0.999))
+
+    print(&#34;Started Autoencoder JEPS training&#34;)
+    for epoch in range(num_epochs):
+        # For each batch in the dataloader
+        for batch_idx, data in enumerate(dataloader, 0):
+            per_img, goal_img, text, commands, lengths_text, lengths_cmd = data
+            per_img = per_img.to(device)
+            goal_img = goal_img.to(device)
+            text = text.to(device)
+            commands = commands.to(device)
+
+            batch_size = per_img.shape[0]
+
+            train_text, text_target = text[:, :-1], text[:, 1:]
+            train_cmd, cmd_target = commands[:, :-1, :], commands[:, 1:, :]
+
+            goal_img_out, text_out, cmd_out = model(per_img, goal_img, train_text, train_cmd, lengths_text, lengths_cmd)
+
+            if loss_type == &#34;aejeps_loss&#34;:
+                text_out = torch.argmax(text_out, 2)
+                cmd_out = torch.argmax(cmd_out, 2)
+                cmd_target = torch.argmax(cmd_target, 2)
+            loss_img, loss_text, loss_cmd = criterion(goal_img_out, text_out, cmd_out, goal_img, text_target, cmd_target)
+
+            mask_text = torch.zeros(text_out.size()).to(device)
+            for i in range(batch_size):
+                mask_text[i, :lengths_text[i]] = 1
+
+            # mask_text = mask_text.view(-1).to(device)
+
+            mask_cmd = torch.zeros(cmd_out.size()).to(device)
+
+            for i in range(batch_size):
+                mask_cmd[i, :lengths_text[i]] = 1
+
+            # mask_cmd = mask_cmd.view(-1).to(device)
+
+            masked_loss_text = torch.sum(loss_text * mask_text) / torch.sum(mask_text, 1)
+            masked_loss_cmd = torch.sum(loss_cmd * mask_cmd) / torch.sum(mask_cmd, 1)
+
+            loss = torch.mean(loss_img) + torch.mean(masked_loss_text) + torch.mean(masked_loss_cmd)# / batch_size
+            loss.backward()
+
+            optimizer.step()
+
+            # Output training stats
+            if batch_idx % 50 == 0:
+                print(&#39;[%d/%d][%d/%d]\tLoss: %.4f\t&#39;
+                      % (epoch, num_epochs, batch_idx, len(dataloader), loss))
+
+    ckpt_path = f&#34;{cfg.MODEL.CHECKPOINT_DIR}/AEJEPS_{time.time()}.pth&#34;
+    print(&#34;Saving checkpoint to &#34;, ckpt_path)
+    torch.save(model, ckpt_path)</code></pre>
+</details>
+</dd>
+<dt id="JEPS.run.train_GAN"><code class="name flex">
+<span>def <span class="ident">train_GAN</span></span>(<span>cfg)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def train_GAN(cfg):
+    num_epochs = cfg.TRAIN.MAX_EPOCH
+    dataloader = construct_loader(cfg)
+    device = &#34;cuda:0&#34; if torch.cuda.is_available() else &#34;cpu&#34;
+    nz = cfg.COMPOSITE.GENERATOR_LATENT_DIM
+    real_label = 1.
+    fake_label = 0.
+
+    netD = Discriminator(cfg).to(device)
+    netG = Generator(cfg).to(device)
+
+    criterion = get_loss_func(&#34;bce&#34;)(reduction=cfg.MODEL.REDUCTION)
+    img_list = []
+    G_losses = []
+    D_losses = []
+    iters = 0
+
+    optimizerD = optim.Adam(netD.parameters(), lr=cfg.MODEL.LEARNING_RATE, betas=(0.5, 0.999))
+    optimizerG = optim.Adam(netG.parameters(), lr=cfg.MODEL.LEARNING_RATE, betas=(0.5, 0.999))
+
+    print(&#34;Starting GAN training:&#34;)
+    for epoch in range(num_epochs):
+        # For each batch in the dataloader
+        for i, data in enumerate(dataloader, 0):
+            per_img, goal_img, text, commands, lengths_text, lengths_cmd = data
+            # per_img = per_img.to(device)
+            goal_img = goal_img.to(device)
+            text = text.to(device)
+            commands = commands.to(device)
+
+            ############################
+            # (1) Update D network: maximize log(D(x)) + log(1 - D(G(z)))
+            ###########################
+            ## Train with all-real batch
+            netD.zero_grad()
+            # Format batch
+            real_cpu = goal_img #data[0].to(device)
+            b_size = real_cpu.size(0)
+            label = torch.full((b_size,), real_label, dtype=torch.float, device=device)
+            # Forward pass real batch through D
+            output = netD(real_cpu, text, commands, lengths_text, lengths_cmd).view(-1)
+            # Calculate loss on all-real batch
+            errD_real = criterion(output, label)
+            # Calculate gradients for D in backward pass
+            errD_real.backward()
+            D_x = output.mean().item()
+
+            ## Train with all-fake batch
+            # Generate batch of latent vectors
+            noise = torch.randn(b_size, nz, 1, 1, device=device)
+            # Generate fake image batch with G
+            fake = netG(noise, text, commands, lengths_text, lengths_cmd)
+            label.fill_(fake_label)
+            # Classify all fake batch with D
+            output = netD(fake.detach(), text, commands, lengths_text, lengths_cmd).view(-1)
+            # Calculate D&#39;s loss on the all-fake batch
+            errD_fake = criterion(output, label)
+            # Calculate the gradients for this batch, accumulated (summed) with previous gradients
+            errD_fake.backward()
+            D_G_z1 = output.mean().item()
+            # Compute error of D as sum over the fake and the real batches
+            errD = errD_real + errD_fake
+            # Update D
+            optimizerD.step()
+
+            ############################
+            # (2) Update G network: maximize log(D(G(z)))
+            ###########################
+            netG.zero_grad()
+            label.fill_(real_label)  # fake labels are real for generator cost
+            # Since we just updated D, perform another forward pass of all-fake batch through D
+            output = netD(fake, text, commands, lengths_text, lengths_cmd).view(-1)
+            # Calculate G&#39;s loss based on this output
+            errG = criterion(output, label)
+            # Calculate gradients for G
+            errG.backward()
+            D_G_z2 = output.mean().item()
+            # Update G
+            optimizerG.step()
+
+            # Output training stats
+            if i % 50 == 0:
+                print(&#39;[%d/%d][%d/%d]\tLoss_D: %.4f\tLoss_G: %.4f\tD(x): %.4f\tD(G(z)): %.4f / %.4f&#39;
+                      % (epoch, num_epochs, i, len(dataloader),
+                         errD.item(), errG.item(), D_x, D_G_z1, D_G_z2))
+
+            # Save Losses for plotting later
+            G_losses.append(errG.item())
+            D_losses.append(errD.item())
+
+            # Check how the generator is doing by saving G&#39;s output on fixed_noise
+            # if (iters % 500 == 0) or ((epoch == num_epochs - 1) and (i == len(dataloader) - 1)):
+            #     with torch.no_grad():
+            #         fake = netG(fixed_noise).detach().cpu()
+            #     img_list.append(vutils.make_grid(fake, padding=2, normalize=True))
+
+            iters += 1
+
+    ckpt_path = f&#34;{cfg.MODEL.CHECKPOINT_DIR}/Generator_{time.time()}.pth&#34;
+    print(&#34;Saving checkpoint to &#34;, ckpt_path)
+    torch.save(netG, ckpt_path)</code></pre>
+</details>
+</dd>
+<dt id="JEPS.run.train_cmdRNN"><code class="name flex">
+<span>def <span class="ident">train_cmdRNN</span></span>(<span>cfg)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def train_cmdRNN(cfg):
+    num_epochs = cfg.TRAIN.MAX_EPOCH
+    dataloader = construct_loader(cfg)
+
+    device = &#34;cuda:0&#34; if torch.cuda.is_available() else &#34;cpu&#34;
+    vocabulary_size = cfg.DATASET.VOCABULARY_SIZE
+    num_commands = cfg.DATASET.NUM_COMMANDS
+    sos = cfg.DATASET.SOS
+    eos = cfg.DATASET.EOS
+    embedding_dim = cfg.COMPOSITE.EMBEDDING_DIM
+    cg_enc_dim = cfg.COMPOSITE.CG_ENCODER_HIDDEN_DIM
+    # cg_dec_dim = cfg.COMPOSITE.CG_DECODER_HIDDEN_DIM
+    cg_enc_nlayers = cfg.COMPOSITE.CG_ENCODER_NUM_LAYERS
+    cg_bidirectional = cfg.COMPOSITE.CG_BIDIRECTIONAL
+
+    loss_type = &#34;mse&#34;
+    model = EncoderDecoderRNN(vocabulary_size, cg_enc_dim, cg_enc_nlayers, num_commands,
+                                               embedding_dim, sos, eos, cg_bidirectional, text_sequence=1).to(device)
+
+
+    criterion = get_loss_func(loss_type)(reduction=cfg.MODEL.REDUCTION)
+
+    optimizer = optim.Adam(model.parameters(), lr=cfg.MODEL.LEARNING_RATE, betas=(0.5, 0.999))
+
+    print(&#34;Started Motor Command LSTM training&#34;)
+
+    for epoch in range(num_epochs):
+        # For each batch in the dataloader
+        for batch_idx, data in enumerate(dataloader, 0):
+            per_img, goal_img, text, commands, lengths_text, lengths_cmd = data
+            per_img = per_img.to(device)
+            goal_img = goal_img.to(device)
+            text = text.to(device)
+            commands = commands.to(device)
+
+            batch_size = per_img.shape[0]
+
+            train_text, text_target = text[:, :-1], text[:, 1:]
+            train_cmd, cmd_target = commands[:, :-1, :], commands[:, 1:, :]
+
+            cmd_out = model(per_img, goal_img, train_text, train_cmd, lengths_text, &#39;train&#39;)
+
+
+            loss_cmd = criterion(cmd_out, cmd_target)
+
+            mask_cmd = torch.zeros(cmd_out.size()).to(device)
+            for i in range(batch_size):
+                mask_cmd[i, :lengths_text[i]] = 1
+
+            # mask_cmd = mask_cmd.view(-1).to(device)
+
+            masked_loss_cmd = torch.sum(loss_cmd * mask_cmd) / torch.sum(mask_cmd, 1)
+
+            loss = torch.mean(masked_loss_cmd) # / batch_size
+            loss.backward()
+
+            optimizer.step()
+
+            # Output training stats
+            if batch_idx % 50 == 0:
+                print(&#39;[%d/%d][%d/%d]\tLoss: %.4f\t&#39;
+                      % (epoch, num_epochs, batch_idx, len(dataloader), loss))
+
+    ckpt_path = f&#34;{cfg.MODEL.CHECKPOINT_DIR}/CommandsRNN_{time.time()}.pth&#34;
+    print(&#34;Saving checkpoint to &#34;, ckpt_path)
+    torch.save(model, ckpt_path)</code></pre>
+</details>
+</dd>
+<dt id="JEPS.run.train_textRNN"><code class="name flex">
+<span>def <span class="ident">train_textRNN</span></span>(<span>cfg)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def train_textRNN(cfg):
+    num_epochs = cfg.TRAIN.MAX_EPOCH
+    dataloader = construct_loader(cfg)
+
+    device = &#34;cuda:0&#34; if torch.cuda.is_available() else &#34;cpu&#34;
+    vocabulary_size = cfg.DATASET.VOCABULARY_SIZE
+    num_commands = cfg.DATASET.NUM_COMMANDS
+    sos = cfg.DATASET.SOS
+    eos = cfg.DATASET.EOS
+    embedding_dim = cfg.COMPOSITE.EMBEDDING_DIM
+    tg_enc_dim = cfg.COMPOSITE.TG_ENCODER_HIDDEN_DIM
+    # tg_dec_dim = cfg.COMPOSITE.TG_DECODER_HIDDEN_DIM
+    tg_enc_nlayers = cfg.COMPOSITE.TG_ENCODER_NUM_LAYERS
+    tg_bidirectional = cfg.COMPOSITE.TG_BIDIRECTIONAL
+
+    loss_type = &#34;mse&#34;
+    model = EncoderDecoderRNN(num_commands, tg_enc_dim, tg_enc_nlayers, vocabulary_size,
+                                            embedding_dim, sos, eos, tg_bidirectional, text_sequence=2).to(device)
+
+    # for m in model.parameters():
+    #     print(m.requires_grad)
+
+    criterion = get_loss_func(loss_type)(reduction=&#34;none&#34;)
+
+    optimizer = optim.Adam(model.parameters(), lr=cfg.MODEL.LEARNING_RATE, betas=(0.5, 0.999))
+
+    print(&#34;Started Text LSTM training&#34;)
+
+    for epoch in range(num_epochs):
+        # For each batch in the dataloader
+        for batch_idx, data in enumerate(dataloader, 0):
+            per_img, goal_img, text, commands, lengths_text, lengths_cmd = data
+            per_img = per_img.to(device)
+            goal_img = goal_img.to(device)
+            text = text.to(device)
+            commands = commands.to(device)
+
+            batch_size = per_img.shape[0]
+
+            train_text, text_target = text[:, :-1], text[:, 1:]
+            train_cmd, cmd_target = commands[:, :-1, :], commands[:, 1:, :]
+
+            text_out = model(per_img, goal_img, train_cmd, train_text, lengths_text, &#39;train&#39;)
+            if loss_type == &#34;mse&#34;:
+                text_target = one_hot(text_target.long(), num_classes=text_out.shape[2]).float()
+
+
+            loss_text = criterion(text_out, text_target)
+
+            mask_text = torch.zeros(text_out.size()).to(device)
+            for i in range(batch_size):
+                mask_text[i, :lengths_text[i]] = 1
+
+            # mask_text = mask_text.view(-1).to(device)
+
+            masked_loss_text = torch.sum(loss_text * mask_text) / torch.sum(mask_text, 1)
+
+            loss = torch.mean(masked_loss_text) # / batch_size
+
+            loss.backward()
+
+            optimizer.step()
+
+            # Output training stats
+            if batch_idx % 50 == 0:
+                print(&#39;[%d/%d][%d/%d]\tLoss: %.4f\t&#39;
+                      % (epoch, num_epochs, batch_idx, len(dataloader), loss))
+
+    ckpt_path = f&#34;{cfg.MODEL.CHECKPOINT_DIR}/TextRNN_{time.time()}.pth&#34;
+    print(&#34;Saving checkpoint to &#34;, ckpt_path)
+    torch.save(model, ckpt_path)</code></pre>
+</details>
+</dd>
+</dl>
+</section>
+<section>
+</section>
+</article>
+<nav id="sidebar">
+<h1>Index</h1>
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="JEPS" href="index.html">JEPS</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-functions">Functions</a></h3>
+<ul class="two-column">
+<li><code><a title="JEPS.run.main" href="#JEPS.run.main">main</a></code></li>
+<li><code><a title="JEPS.run.one_hot" href="#JEPS.run.one_hot">one_hot</a></code></li>
+<li><code><a title="JEPS.run.train_AEJEPS" href="#JEPS.run.train_AEJEPS">train_AEJEPS</a></code></li>
+<li><code><a title="JEPS.run.train_GAN" href="#JEPS.run.train_GAN">train_GAN</a></code></li>
+<li><code><a title="JEPS.run.train_cmdRNN" href="#JEPS.run.train_cmdRNN">train_cmdRNN</a></code></li>
+<li><code><a title="JEPS.run.train_textRNN" href="#JEPS.run.train_textRNN">train_textRNN</a></code></li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc"><cite>pdoc</cite> 0.8.1</a>.</p>
+</footer>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad()</script>
+</body>
+</html>
